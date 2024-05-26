@@ -23,15 +23,7 @@ class StudentAdmin(admin.ModelAdmin):
     delete_selected.short_description = "Delete selected elements"
 
 
-# class ElementAdmin(admin.ModelAdmin):
-#     class Meta:
-#         actions = ["delete_selected"]
-#
-#         def delete_selected(self, request, queryset):
-#             for element in queryset:
-#                 element.delete()
-#
-#         delete_selected.short_description = "Delete selected elements"
+ 
 
 
 @admin.register(Room)

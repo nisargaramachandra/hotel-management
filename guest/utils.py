@@ -1,4 +1,4 @@
-# Takes a django template and returns a pdf .
+ 
 from io import BytesIO
 from django.http import HttpResponse
 from django.template.loader import get_template

@@ -16,11 +16,7 @@ class UserForm(UserCreationForm):
             'username': 'same as your roll no.',
         }
 
-    # def clean_password(self):
-    #     password = self.cleaned_data.get('password1')
-    #     if len(password) < 8:
-    #         raise ValidationError('Password too short')
-    #     return super(UserCreationForm, self).clean_password1()
+     
 
 
 class LoginForm(forms.Form):

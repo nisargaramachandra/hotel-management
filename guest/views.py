@@ -10,7 +10,7 @@ from django.template.loader import get_template
 from .utils import render_to_pdf
 from django.core.exceptions import ObjectDoesNotExist
 
-# Create your views here.
+ 
 
 
 def start(request):
@@ -20,7 +20,7 @@ def start(request):
 def register(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
-        # error1, error2 = False, False
+         
         print(form.is_valid())
         if form.is_valid():
             new_user = form.save(commit=False)
@@ -47,13 +47,7 @@ def register(request):
             form = UserForm()
             args = {'form': form}
             return render(request, 'reg_form.html', args)
-        # elif len(form.data['password1']) <= 8 or len(form.data['password2']) <= 8:
-        #     if len(form.data['password1']) <= 8:
-        #         error1 = True
-        #     if len(form.data['password2']) <= 8:
-        #         error2 = True
-        #     return render(request, 'reg_form.html', {'form': form, 'error1': error1, 'error2': error2})
-
+        
     else:
 
         form = UserForm()
@@ -87,8 +81,7 @@ def home(request):
     print(request.method)
     if request.method == "POST":
         form = DateForm(request.POST)
-        # response = HttpResponse()  # Created a HttpResponse
-        # response['Cache-Control'] = 'no-cache'  # Set Cache-Control Header
+         
         if form.is_valid():
             start_date = form.cleaned_data['checkIn']
 
@@ -115,9 +108,7 @@ def home(request):
 
                     res.save()
                     request.session['booking_id'] = res.booking_id
-                    # form.save(form.save(commit=False))
-                    # form = SelectionForm(instance=request.reservation)
-                    # form.fields["room"].queryset = x
+                     
                     args = {'rooms': x, 'count': cnt, 'res': res}
                     return render(request, 'guest/details.html', args)
                 else:
@@ -147,7 +138,7 @@ def edit(request, res_id):
         except Guest.DoesNotExist:
             form = RegistrationForm(request.POST)
 
-        # form = RegistrationForm(request.POST,instance=request.user.guest)
+         
         res = Reservation.objects.get(pk=res_id)
         if form.is_valid():
             if (not res.room_alloted) and (request.session['room']):
@@ -169,8 +160,7 @@ def edit(request, res_id):
 
                     res.save()
 
-                # res.guest = request.user.guest
-                # res.save()
+                 
 
                 return render(request, 'guest/profile.html', {'res': res})
 
@@ -188,7 +178,7 @@ def edit(request, res_id):
         except Guest.DoesNotExist:
             form = RegistrationForm(request.POST)
 
-        # form = RegistrationForm(instance=request.user.guest)
+        
         return render(request, 'guest/edit.html', {'form': form,'res':res_id})
 
 
@@ -199,9 +189,9 @@ def select(request, res_id):
         form = SelectionForm(request.POST, instance=Reservation.objects.get(pk=res_id))
         if form.is_valid():
             res_now = form.save(commit=False)
-            # res_now.save()
+             
             request.session['room'] = res_now.room.no
-            # kwargs = {"room": res_now.room}
+             
             return redirect('guest:edit', res_id =res_id)
     else:
         print('res_id',res_id)

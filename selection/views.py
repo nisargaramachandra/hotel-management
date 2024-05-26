@@ -47,12 +47,7 @@ def register(request):
             form = UserForm()
             args = {'form': form}
             return render(request, 'reg_form.html', args)
-        # elif len(form.data['password1']) <= 8 or len(form.data['password2']) <= 8:
-        #     if len(form.data['password1']) <= 8:
-        #         error1 = True
-        #     if len(form.data['password2']) <= 8:
-        #         error2 = True
-        #     return render(request, 'reg_form.html', {'form': form, 'error1': error1, 'error2': error2})
+        
 
     else:
 
@@ -75,9 +70,7 @@ def user_login(request):
                     return HttpResponse('Invalid Login')
                 if user.is_active:
                     login(request, user)
-                    # student = request.user.student
-                    # leaves = Leave.objects.filter(student=request.user.student)
-                    # return render(request, 'profile.html', {'student': student, 'leaves': leaves})
+                     
                     return redirect('../student_profile/')
                 else:
                     return HttpResponse('Disabled account')
@@ -104,10 +97,7 @@ def warden_login(request):
                     return HttpResponse('Invalid Login')
                 elif user.is_active:
                     login(request, user)
-                    # print('True')
-                    # room_list = request.user.warden.hostel.room_set.all()
-                    # context = {'rooms': room_list}
-                    # return render(request, 'warden.html', context)
+                     
                     return redirect('../warden_profile/')
                 else:
                     return HttpResponse('Disabled account')
@@ -181,8 +171,7 @@ def select(request):
         form = SelectionForm(request.POST, instance=request.user.student)
         if form.is_valid():
             if request.user.student.room_id:
-                # stud = form.save(commit=False)
-                # print(request.user.student.room_id, stud.room_id)
+                
                 request.user.student.room_allotted = True
                 r_id_after = request.user.student.room_id
                 room = Room.objects.get(id=r_id_after)
@@ -223,20 +212,18 @@ def select(request):
         print(hostel)
         x = Room.objects.none()
         if student_room_type == 'B':
-            # print(student_room_type)
-            # for i in range(len(hostel)):
-            #     h_id = hostel[i].id
+            
+             
             x = Room.objects.filter(
                 hostel__id=hostel, room_type=['S','D'], vacant=True).order_by('no')
 
-            # x = x | a
+             
         else:
-            # for i in range(len(hostel)):
-            #     h_id = hostel[i].id
+             
             x = Room.objects.filter(
                 hostel_id__in=hostel, room_type=student_room_type, vacant=True).order_by('hostel_id','no')
             print(x)
-            # x = x | a
+            
         form.fields["room"].queryset = x
         print('x',x)
         return render(request, 'select_room.html', {'form': form})
@@ -275,7 +262,7 @@ def repair(request):
 
 
 
-# @login_required
+ 
 def warden_dues(request):
     user = request.user
     if user is not None:
@@ -287,8 +274,7 @@ def warden_dues(request):
     else:
         return HttpResponse('Invalid Login')
 
-
-# @login_required
+ 
 def warden_add_due(request):
     user = request.user
     if user is not None:
@@ -309,7 +295,7 @@ def warden_add_due(request):
         return HttpResponse('Invalid Login')
 
 
-# @login_required
+ 
 def warden_remove_due(request):
     user = request.user
     if user is not None:
@@ -459,9 +445,7 @@ def mess_rebate(request):
                     stud_rebate_list[stud_id.enrollment_no] = cnt
                 print(stud_rebate_list)
                 month_name = calendar.month_name[this_month]
-                #stud = Student.objects.filter(id__in=leaves)
-                # this_month = datetime.datetime.now().month
-                # HourEntries.objects.filter(date__month=this_month).aggregate(Sum("quantity"))
+                 
                 return render(request, 'mess_rebate.html',
                               {'form': form, 'count_rebate': stud_rebate_list, 'student': stud})
             else:

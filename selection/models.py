@@ -121,7 +121,7 @@ class Warden(models.Model):
     def delete(self, *args, **kwargs):
         self.user.is_warden = False
         self.user.save()
-        print('pppppppppppppppppppppppppppppppppppppppp')
+        print('ppppppp')
 
         super(Warden, self).delete(*args, **kwargs)
 
